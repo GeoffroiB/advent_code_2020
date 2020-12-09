@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Dict, Iterable, List
+from typing import Iterable, List
 import numpy as np
 
 
@@ -13,7 +13,7 @@ def product(iterable: Iterable[int]) -> int:
 def read_ints(file_path: str) -> np.ndarray:
     """ Presumes 1 int per line """
     with open(file_path, encoding="utf-8") as f:
-        return np.array([int(line.strip()) for line in f.readlines() if line])
+        return np.array([int(line.strip()) for line in f.readlines() if line], dtype=np.int64)
 
 
 def read_lines(file_path: str, stripped: bool = True) -> List[str]:
