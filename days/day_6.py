@@ -39,5 +39,13 @@ class Day6(AbstractDay):
 
                 total += len(group_intersection)
                 group_answers = []
+        else:
+            if group_answers:
+                group_intersection = group_answers[0]
+
+                for answer in group_answers[1:]:
+                    group_intersection.intersection_update(answer)
+
+                total += len(group_intersection)
 
         return total
