@@ -33,11 +33,15 @@ class AbstractDay(ABC):
         def resultToStr(index: int, dt: float, result: Any):
             return f"  Part {index + 1}:  {result:<15}  ({dt:.6f}s)"
 
-        print(f"Day {self._day_number}")
+        print(f"\nDay {self._day_number}")
 
         part_methods: List[Callable] = [self.partOne, self.partTwo]
         for i, part_method in enumerate(part_methods):
             print(resultToStr(i, *timeExec(part_method)))
+
+        print("")
+
+        return None
 
     def _parseChildClassNameForDayNumber(self) -> int:
         """Validate child class type name and retrieves """
