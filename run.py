@@ -1,12 +1,15 @@
-from sys import argv
+from typing import List
+import sys
 
-from day_1 import day_1_1, day_1_2
+import days
 
 
-def main(args=None):
-    day_1_1()
-    day_1_2()
+def main(args: List[str]):
+    day = getattr(days, f"Day{int(args[0])}")()
+    day.run()
 
+
+DAY_NUMBER: int = 3  # default value, if not in arguments
 
 if __name__ == "__main__":
-    main(argv[1:])
+    main(sys.argv[1:] or [str(DAY_NUMBER)])
