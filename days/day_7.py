@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import numpy as np
+
 from .abstract_day import AbstractDay
 from .utils import read_lines
 
@@ -7,40 +9,37 @@ from .utils import read_lines
 class Day7(AbstractDay):
     def partOne(self) -> int:
         # Parse data in structure
-        bags = {}
+        bag_contents = {}
+
         for ll in read_lines(self.inputs_path):
-            a, b = ll.split(" bags contain ")
+            color, contents_string = ll.split(" bags contain ")
 
-            if "no" in b:
-                bags[a] = {}
-            else:
-                contents = {}
-                for c in b.strip().split(", "):
-                    cc = c.split(" ")
-                    if cc[0] != "no":
-                        count = int(cc[0])
-                        color = " ".join(cc[1:-1])
-                        contents[color] = count
+            bag_contents[color] = {}
+            if "no" not in contents_string:
+                for item in contents_string.strip().split(", "):
+                    item_qt, *item_color = item.split(" ")
 
-                bags[a] = contents
+                    item_qt = int(item_qt)
+                    item_color = " ".join(item_color[:-1])
 
-        bag_colors = list(bags.keys())
-        contains = [c for c in bag_colors if "shiny gold" in bags[c]]
+                    bag_contents[color][item_color] = item_qt
 
-        last_size, current_size = 0, len(contains)
-        while current_size != last_size:  # not reached stable state
-            last_size = current_size
+        solveds = {}
 
-            for c in bag_colors:
-                if c not in contains:
-                    for cc in bags[c]:
-                        if cc in contains:
-                            contains.append(c)
-                            break
+        def solve(c) -> bool:
+            if c not in solveds:  # Not already solved
+                for sub_c in bag_contents[c]:
+                    if sub_c == "shiny gold" or solve(sub_c):
+                        solveds[c] = True
+                        break
+                else:
+                    solveds[c] = False
 
-            current_size = len(contains)
+            return solveds[c]
 
-        return current_size
+        result: int = np.count_nonzero([solve(bag_c) for bag_c in bag_contents])
+
+        return result
 
     def partTwo(self) -> None:
         return None
