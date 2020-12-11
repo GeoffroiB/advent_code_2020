@@ -45,11 +45,5 @@ class Day10(AbstractDay):
                 result = np.sum([solve(val, l_devices[l_devices.index(val):]) for val in range(prev + 1, prev + 3 + 1) if val in l_devices], dtype=np.uint64)
                 known_paths[prev] = result
                 return result
-                # cumm = 0
-                # for val in range(prev + 1, prev + 3 + 1):
-                #     if val in l_devices:
-                #         count = solve(val, l_devices[l_devices.index(val):])
-                #         cumm += count
-                # return cumm
 
         return solve(0, devices)
