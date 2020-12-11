@@ -6,7 +6,7 @@ from numpy import sum
 from .abstract_day import AbstractDay
 from .utils import read_ints, read_lines, product
 
-
+# Basic template for new day (Copy Pasta base)
 class Day0(AbstractDay):
     def partOne(self) -> int:
         result: int = 0

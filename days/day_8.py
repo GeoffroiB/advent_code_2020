@@ -18,9 +18,7 @@ class Day8(AbstractDay):
             op, arg = line.split(" ")
 
             if (line_index + 0) in executed:
-                print(f"Skipping {line_index}")
-                # line_index += 1
-                # continue
+                break
 
             if op == "nop":
                 line_index += 1
@@ -44,7 +42,6 @@ class Day8(AbstractDay):
 
         for i in range(line_count):
             acc = 0
-            print(f"{i}/{line_count}")  # show progress
 
             lines = deepcopy(data_lines)
             if "jmp" in lines[i]:
