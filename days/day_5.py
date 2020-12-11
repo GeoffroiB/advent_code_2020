@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
+from typing import Optional
 
 from .abstract_day import AbstractDay
 from .utils import read_lines
@@ -8,42 +9,41 @@ from .utils import read_lines
 
 class Day5(AbstractDay):
     def partOne(self) -> int:
-        map_letters_row = {"B": "1", "F": "0"}
-        map_letters_col = {"R": "1", "L": "0"}
+        highest_seat_id = 0
 
-        highest_id = 0
         for line in read_lines(self.inputs_path):
-            bin_row = "".join([map_letters_row[c] for c in line[:7]])
-            bin_column = "".join([map_letters_col[c] for c in line[7:]])
+            seat_id = Day5.stringToSeatID(line)
+            highest_seat_id = seat_id if seat_id > highest_seat_id else highest_seat_id
 
-            row, column = int(bin_row, 2), int(bin_column, 2)
-            i = row * 8 + column
-
-            highest_id = i if i > highest_id else highest_id
-
-        return highest_id
+        return highest_seat_id
 
     def partTwo(self) -> int:
-        map_letters_row = {"B": "1", "F": "0"}
-        map_letters_col = {"R": "1", "L": "0"}
-        possibilities = list(range(int("1111111111", 2) + 1))
-
-        for line in read_lines(self.inputs_path):
-            bin_row = "".join([map_letters_row[c] for c in line[:7]])
-            bin_column = "".join([map_letters_col[c] for c in line[7:]])
-
-            row, column = int(bin_row, 2), int(bin_column, 2)
-            i = row * 8 + column
-
-            possibilities[i] = -1
-
+        total_seat_count = int("1111111111", 2) + 1
         min_id, max_id = int("1000000000", 2), int("1111111000", 2)
 
-        for i in possibilities:
-            if i != -1:  # Remove used seats
-                if min_id <= i < max_id:  # "Your seat wasn't at the very front or back"
-                    if i-1 not in possibilities:  # Previous seat not in list
-                        if i+1 not in possibilities:  # Next seat not in list
-                            return i
+        possibilities = np.arange(total_seat_count, dtype=int)
+
+        for line in read_lines(self.inputs_path):
+            seat_id = Day5.stringToSeatID(line)
+            possibilities[seat_id] = -1
+
+        for seat_id in possibilities:
+            if min_id <= seat_id < max_id:
+                """
+                "Your seat wasn't at the very front or back"
+                but also ignores used seats -> -1
+                """
+                if seat_id - 1 not in possibilities:  # Previous seat not in list
+                    if seat_id + 1 not in possibilities:  # Next seat not in list
+                        return seat_id
 
         return -1  # Not found
+
+    @staticmethod
+    def stringToSeatID(string: str) -> int:
+        seat_id = 0
+        for c in string:
+            seat_id *= 2
+            if c == "B" or c == "R":
+                seat_id += 1
+        return seat_id
