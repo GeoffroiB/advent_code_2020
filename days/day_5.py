@@ -17,7 +17,7 @@ class Day5(AbstractDay):
 
         return highest_seat_id
 
-    def partTwo(self) -> int:
+    def partTwo(self) -> Optional[int]:
         total_seat_count = int("1111111111", 2) + 1
         min_id, max_id = int("1000000000", 2), int("1111111000", 2)
 
@@ -37,7 +37,7 @@ class Day5(AbstractDay):
                     if seat_id + 1 not in possibilities:  # Next seat not in list
                         return seat_id
 
-        return -1  # Not found
+        return None  # Not found
 
     @staticmethod
     def stringToSeatID(string: str) -> int:
