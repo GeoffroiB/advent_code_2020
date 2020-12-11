@@ -30,12 +30,14 @@ class AbstractDay(ABC):
     def run(self) -> None:
         """Runs and prints results"""
 
+        part_methods: List[Callable] = [self.partOne, self.partTwo]
+
         def resultToStr(index: int, dt: float, result: Any):
-            return f"  Part {index + 1}:  {result:<15}  ({dt:.6f}s)"
+            result_str: str = f"{result:<15}  ({dt:.6f}s)" if result is not None \
+                else f"{result}"
+            return f"  Part {index + 1}:  {result_str}"
 
         print(f"\nDay {self._day_number}")
-
-        part_methods: List[Callable] = [self.partOne, self.partTwo]
         for i, part_method in enumerate(part_methods):
             print(resultToStr(i, *timeExec(part_method)))
 
