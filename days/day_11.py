@@ -9,7 +9,7 @@ from .utils import read_ints, read_lines, product
 
 class Day11(AbstractDay):
     def partOne(self) -> int:
-        state_1 = [[c for c in line] for line in read_lines(self.inputs_test_path)]
+        state_1 = [[c for c in line] for line in read_lines(self.inputs_path)]
         height, width = len(state_1), len(state_1[0])
 
         state_2 = [["." for i in range(width)] for j in range(height)]
