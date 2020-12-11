@@ -26,7 +26,7 @@ class Day11(AbstractDay):
             return count
 
         while True:
-            # print("\n".join(["".join() for row in state_1]), end="\n\n")
+            # print("\n".join(["".join(row) for row in state_1]), end="\n\n")
             for i, row in enumerate(state_1):
                 for j, cell in enumerate(row):
                     n_count = count_around(i, j)
@@ -45,7 +45,7 @@ class Day11(AbstractDay):
                 break
 
             state_1 = deepcopy(state_2)
-            # print("\n".join(["".join() for row in state_1]), end="\n\n")
+            # print("\n".join(["".join(row) for row in state_1]), end="\n\n")
 
         result = np.sum([np.count_nonzero([c == "#" for c in row]) for row in state_2])
 
