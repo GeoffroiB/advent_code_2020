@@ -9,3 +9,5 @@ from .day_8 import Day8
 from .day_9 import Day9
 from .day_10 import Day10
 from .day_11 import Day11
+from .day_12 import Day12
+from .day_13 import Day13
