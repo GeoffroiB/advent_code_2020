@@ -7,22 +7,7 @@ import numba
 from .abstract_day import AbstractDay
 from .utils import read_ints, read_lines, product
 
-@numba.njit()
-def find_this(t, l):
-    t = np.uint64(t)
-    to = np.uint64(t)
-    while True:
-        temp = t + np.uint64(1)
-        for tv in l:
-            if temp % tv != 0:
-                break
-            temp += 1
-        else:
-            break
-        t += to
-    return t
 
-# Basic template for new day (Copy Pasta base)
 class Day13(AbstractDay):
     def partOne(self) -> int:
         lines = read_lines(self.inputs_path)
@@ -81,21 +66,3 @@ int main() {{
 
         print("\tstd::cin.get();")
         print("}")
-        input()
-        # =============================
-
-
-        t = values[0]
-        t_off = values[0]
-
-        while True:
-            temp_t = t
-            print(t)
-            for v, s in zip(values, skips):
-                if temp_t % v != 0:
-                    break
-                temp_t += s
-            else:
-                break
-            t += t_off
-        return t
