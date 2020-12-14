@@ -3,6 +3,17 @@ from typing import Iterable, List
 import numpy as np
 
 
+def int_to_bin_str(i: int, bit_width: int = -1) -> str:
+    binary_str: str = bin(i)[2:]  # remove '0b' prefix
+
+    len_binary_str: int = len(binary_str)
+    if len_binary_str < bit_width:
+        left_padding: str = "0" * (bit_width - len_binary_str)
+        binary_str: str = left_padding + binary_str
+
+    return binary_str
+
+
 def product(iterable: Iterable[int]) -> int:
     cummul: int = 1
     for value in iterable:
