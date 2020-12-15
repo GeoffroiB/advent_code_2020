@@ -1,14 +1,19 @@
-from .day_1 import Day1
-from .day_2 import Day2
-from .day_3 import Day3
-from .day_4 import Day4
-from .day_5 import Day5
-from .day_6 import Day6
-from .day_7 import Day7
-from .day_8 import Day8
-from .day_9 import Day9
-from .day_10 import Day10
-from .day_11 import Day11
-from .day_12 import Day12
-from .day_13 import Day13
-from .day_14 import Day14
+# -*- coding: utf-8 -*-
+
+from importlib import import_module
+
+
+def get_day(day_tag: str):
+    sub_module_name: str = f"day_{day_tag}"
+    try:
+        day_module = import_module(f"days.{sub_module_name}")
+    except:
+        return None
+
+    day_class_name = f"Day{day_tag}"
+    try:
+        day_class = getattr(day_module, day_class_name)
+    except:
+        return None
+
+    return day_class()
