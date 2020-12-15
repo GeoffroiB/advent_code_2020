@@ -70,13 +70,13 @@ class Day14(AbstractDay):
 
         # Generate all adresses considering floating bits
         addresses: List[str] = []
-        for a, m in zip(partially_masked_address[1:], floating_mask[1:]):
+        for a, m in zip(partially_masked_address, list(floating_mask)):
             if m == "X":
                 addresses: List[str] = \
-                    [addr + "0" for addr in addresses] + [addr + "1" for addr in addresses] if address \
+                    ([addr + "0" for addr in addresses] + [addr + "1" for addr in addresses]) if addresses \
                     else ["0", "1"]
             else:
-                addresses: List[str] = [addr + a for addr in addresses] if address else [a]
+                addresses: List[str] = [addr + a for addr in addresses] if addresses else [a]
 
         result: List[int] = [int(addr, 2) for addr in addresses]
         return result
